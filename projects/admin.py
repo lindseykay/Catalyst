@@ -3,6 +3,7 @@ from .models import Project
 
 # Register your models here.
 
+
 class ProjectAdmin(admin.ModelAdmin):
     pass
 
