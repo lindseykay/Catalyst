@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from projects.models import Project
@@ -22,3 +24,12 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     template_name = "projects/detail.html"
 
     # context name is "project"
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    template_name = "projects/new.html"
+    fields = ["name", "description", "members"]
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("show_project", args=[self.object.id])
